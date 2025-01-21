@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Безопасный Интернет: Защити себя онлайн</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">🛡️ Безопасный Интернет</div>
+            <ul class="nav-links">
+                <li><a href="#education">Обучение</a></li>
+                <li><a href="#tools">Инструменты</a></li>
+                <li><a href="#quiz">Тесты</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Защити себя онлайн</h1>
+            <p>Узнайте всё о кибербезопасности и защите личных данных</p>
+        </section>
+
+        <section id="education" class="education">
+            <h2>Образовательные материалы</h2>
+            <div class="articles-grid">
+                <article class="card">
+                    <h3>Основы кибербезопасности</h3>
+                    <p>Узнайте базовые принципы защиты в интернете</p>
+                    <button onclick="showContent('cyber-basics')">Читать</button>
+                </article>
+                <article class="card">
+                    <h3>Создание надежного пароля</h3>
+                    <p>Как создать и хранить безопасные пароли</p>
+                    <button onclick="showContent('password-security')">Читать</button>
+                </article>
+                <article class="card">
+                    <h3>Защита от фишинга</h3>
+                    <p>Как распознать и избежать мошенничества</p>
+                    <button onclick="showContent('phishing')">Читать</button>
+                </article>
+                <article class="card">
+                    <h3>Безопасность в соцсетях</h3>
+                    <p>Правила безопасного общения онлайн</p>
+                    <button onclick="showContent('social-media')">Читать</button>
+                </article>
+            </div>
+        </section>
+
+        <section id="tools" class="tools">
+            <h2>Полезные инструменты</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3>VPN сервисы</h3>
+                    <ul>
+                        <li>Защита соединения</li>
+                        <li>Анонимность в сети</li>
+                        <li>Обход блокировок</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h3>Антивирусы</h3>
+                    <ul>
+                        <li>Защита от вредоносных программ</li>
+                        <li>Проверка файлов</li>
+                        <li>Мониторинг системы</li>
+                    </ul>
+                </div>
+                <div class="tool-card">
+                    <h3>Менеджеры паролей</h3>
+                    <ul>
+                        <li>Хранение паролей</li>
+                        <li>Генерация надежных паролей</li>
+                        <li>Синхронизация</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="quiz">
+            <h2>Проверь свои знания</h2>
+            <div id="quiz-container">
+                <div id="question"></div>
+                <div id="options"></div>
+                <button id="submit-quiz">Проверить</button>
+                <div id="result"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Сделал ученик 9А Ишкузин Даниил</p>
+    </footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
