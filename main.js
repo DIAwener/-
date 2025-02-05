@@ -3,89 +3,16 @@ const modal = document.getElementById('modal');
 const modalContent = document.getElementById('modal-content');
 const closeBtn = document.getElementsByClassName('close')[0];
 
-function showModal(content) {
-    modal.style.display = 'block';
-    modalContent.innerHTML = content;
-}
-
-closeBtn.onclick = function() {
-    modal.style.display = 'none';
-}
-
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-const educationalContent = {
-    'cyber-basics': {
-        title: 'Основы кибербезопасности',
-        content: `
-            <h2>Основы кибербезопасности</h2>
-            <p>Кибербезопасность - это защита компьютеров, серверов, мобильных устройств, электронных систем, сетей и данных от вредоносных атак.</p>
-            <h3>Основные правила:</h3>
-            <ul>
-                <li>Регулярно обновляйте программное обеспечение</li>
-                <li>Используйте антивирусное ПО</li>
-                <li>Создавайте резервные копии важных данных</li>
-                <li>Не открывайте подозрительные ссылки и вложения</li>
-                <li>Используйте надежные пароли</li>
-            </ul>
-        `
-    },
-    'password-security': {
-        title: 'Создание надежного пароля',
-        content: `
-            <h2>Как создать надежный пароль</h2>
-            <p>Надежный пароль - ваша первая линия защиты в интернете.</p>
-            <h3>Правила создания надежного пароля:</h3>
-            <ul>
-                <li>Минимум 12 символов</li>
-                <li>Комбинация букв, цифр и специальных символов</li>
-                <li>Использование верхнего и нижнего регистра</li>
-                <li>Избегайте личной информации</li>
-                <li>Уникальный пароль для каждого сервиса</li>
-            </ul>
-        `
-    },
-    'phishing': {
-        title: 'Защита от фишинга',
-        content: `
-            <h2>Как распознать фишинг</h2>
-            <p>Фишинг - это вид мошенничества с целью получения доступа к конфиденциальным данным пользователей.</p>
-            <h3>Признаки фишинга:</h3>
-            <ul>
-                <li>Срочные просьбы о предоставлении данных</li>
-                <li>Странные или неточные адреса отправителей</li>
-                <li>Грамматические ошибки в сообщениях</li>
-                <li>Просьбы о переводе денег</li>
-                <li>Подозрительные вложения</li>
-            </ul>
-        `
-    },
-    'social-media': {
-        title: 'Безопасность в социальных сетях',
-        content: `
-            <h2>Безопасное использование социальных сетей</h2>
-            <p>Социальные сети могут быть опасны при неправильном использовании.</p>
-            <h3>Правила безопасности:</h3>
-            <ul>
-                <li>Настройте приватность профиля</li>
-                <li>Не принимайте заявки от незнакомцев</li>
-                <li>Не публикуйте личную информацию</li>
-                <li>Будьте осторожны с геолокацией</li>
-                <li>Проверяйте источники информации</li>
-            </ul>
-        `
-    }
-};
-// Функции шифрования
+// Описания шифров
 const cipherDescriptions = {
-    caesar: 'Шифр Цезаря - это метод шифрования, где каждая буква в тексте заменяется буквой, находящейся на определённое количество позиций правее в алфавите.',
-    atbash: 'Шифр Атбаш - это метод шифрования, где первая буква алфавита заменяется на последнюю, вторая на предпоследнюю и так далее.',
-    morse: 'Азбука Морзе - это способ кодирования букв и цифр последовательностями точек и тире.'
+    caesar: 'Шифр Цезаря - это метод шифрования, где каждая буква в тексте заменяется буквой, находящейся на определённое количество позиций правее в алфавите. Этот метод был использован Юлием Цезарем для секретной переписки.',
+    atbash: 'Шифр Атбаш - это метод шифрования, где первая буква алфавита заменяется на последнюю, вторая на предпоследнюю и так далее. Этот шифр использовался в древней письменности иврита.',
+    morse: 'Азбука Морзе - это способ кодирования букв и цифр последовательностями точек и тире. Широко использовалась для передачи сообщений по телеграфу.',
+    vigenere: 'Шифр Виженера - это метод полиалфавитного шифрования буквенного текста с использованием ключевого слова. Считался нераскрываемым на протяжении трех столетий.',
+    binary: 'Двоичный код - это представление текста в виде последовательности нулей и единиц. Это базовый метод кодирования информации в компьютерных системах.'
 };
 
+// Азбука Морзе
 const morseCode = {
     'а': '.-', 'б': '-...', 'в': '.--', 'г': '--.', 'д': '-..', 'е': '.', 'ё': '.', 
     'ж': '...-', 'з': '--..', 'и': '..', 'й': '.---', 'к': '-.-', 'л': '.-..', 
@@ -94,44 +21,30 @@ const morseCode = {
     'ш': '----', 'щ': '--.-', 'ъ': '--.--', 'ы': '-.--', 'ь': '-..-', 'э': '...-...',
     'ю': '..--', 'я': '.-.-', ' ': ' '
 };
-function showContent(contentId) {
-    const content = educationalContent[contentId];
-    if (content) {
-        modalContent.innerHTML = content.content;
-        modal.style.display = 'block';
-    }
-}
+
+// Функции шифрования
 function encodeCipher() {
     const text = document.getElementById('input-text').value.toLowerCase();
     const cipherType = document.getElementById('cipher-type').value;
     const shift = parseInt(document.getElementById('shift').value) || 3;
+    const key = document.getElementById('vigenere-key')?.value?.toLowerCase() || 'ключ';
     let result = '';
 
     switch(cipherType) {
         case 'caesar':
-            for (let i = 0; i < text.length; i++) {
-                let char = text[i];
-                if (char >= 'а' && char <= 'я') {
-                    let code = ((char.charCodeAt(0) - 1072 + shift) % 32) + 1072;
-                    result += String.fromCharCode(code);
-                } else {
-                    result += char;
-                }
-            }
+            result = caesarCipher(text, shift);
             break;
         case 'atbash':
-            for (let i = 0; i < text.length; i++) {
-                let char = text[i];
-                if (char >= 'а' && char <= 'я') {
-                    let code = 1071 - (char.charCodeAt(0) - 1072);
-                    result += String.fromCharCode(code);
-                } else {
-                    result += char;
-                }
-            }
+            result = atbashCipher(text);
             break;
         case 'morse':
-            result = text.split('').map(char => morseCode[char] || char).join(' ');
+            result = morseEncode(text);
+            break;
+        case 'vigenere':
+            result = vigenereCipher(text, key, true);
+            break;
+        case 'binary':
+            result = textToBinary(text);
             break;
     }
 
@@ -143,95 +56,92 @@ function decodeCipher() {
     const text = document.getElementById('input-text').value.toLowerCase();
     const cipherType = document.getElementById('cipher-type').value;
     const shift = parseInt(document.getElementById('shift').value) || 3;
+    const key = document.getElementById('vigenere-key')?.value?.toLowerCase() || 'ключ';
     let result = '';
 
     switch(cipherType) {
         case 'caesar':
-            for (let i = 0; i < text.length; i++) {
-                let char = text[i];
-                if (char >= 'а' && char <= 'я') {
-                    let code = ((char.charCodeAt(0) - 1072 - shift + 32) % 32) + 1072;
-                    result += String.fromCharCode(code);
-                } else {
-                    result += char;
-                }
-            }
+            result = caesarCipher(text, -shift);
             break;
         case 'atbash':
-            // Атбаш работает одинаково в обе стороны
-            for (let i = 0; i < text.length; i++) {
-                let char = text[i];
-                if (char >= 'а' && char <= 'я') {
-                    let code = 1071 - (char.charCodeAt(0) - 1072);
-                    result += String.fromCharCode(code);
-                } else {
-                    result += char;
-                }
-            }
+            result = atbashCipher(text);
             break;
         case 'morse':
-            const reverseMorse = Object.fromEntries(
-                Object.entries(morseCode).map(([key, value]) => [value, key])
-            );
-            result = text.split(' ').map(char => reverseMorse[char] || char).join('');
+            result = morseDecode(text);
+            break;
+        case 'vigenere':
+            result = vigenereCipher(text, key, false);
+            break;
+        case 'binary':
+            result = binaryToText(text);
             break;
     }
 
     document.getElementById('output-text').value = result;
-    document.getElementById('cipher-description').textContent = cipherDescriptions[cipherType];
 }
 
-// Проверка пароля
-function checkPassword() {
-    const password = document.getElementById('password-input').value;
-    const strength = document.getElementById('password-strength');
-    let score = 0;
-    
-    if (password.length >= 8) score++;
-    if (/\d/.test(password)) score++;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) score++;
-    if (/[!@#$%^&*]/.test(password)) score++;
+// Шифр Цезаря
+function caesarCipher(text, shift) {
+    return text.split('').map(char => {
+        if (char >= 'а' && char <= 'я') {
+            let code = ((char.charCodeAt(0) - 1072 + shift + 32) % 32) + 1072;
+            return String.fromCharCode(code);
+        }
+        return char;
+    }).join('');
+}
 
+// Шифр Атбаш
+function atbashCipher(text) {
+    return text.split('').map(char => {
+        if (char >= 'а' && char <= 'я') {
+            return String.fromCharCode(1071 - (char.charCodeAt(0) - 1072));
+        }
+        return char;
+    }).join('');
+}
+
+// Азбука Морзе
+function morseEncode(text) {
+    return text.split('').map(char => morseCode[char] || char).join(' ');
+}
+
+function morseDecode(text) {
+    const reverseMorse = Object.fromEntries(
+        Object.entries(morseCode).map(([key, value]) => [value, key])
+    );
+    return text.split(' ').map(char => reverseMorse[char] || char).join('');
+}
+
+// Шифр Виженера
+function vigenereCipher(text, key, encode) {
     let result = '';
-    switch(score) {
-        case 0: result = '<span style="color: red">Очень слабый пароль</span>'; break;
-        case 1: result = '<span style="color: orange">Слабый пароль</span>'; break;
-        case 2: result = '<span style="color: yellow">Средний пароль</span>'; break;
-        case 3: result = '<span style="color: lightgreen">Хороший пароль</span>'; break;
-        case 4: result = '<span style="color: green">Отличный пароль!</span>'; break;
+    let keyIndex = 0;
+    
+    for (let i = 0; i < text.length; i++) {
+        if (text[i] >= 'а' && text[i] <= 'я') {
+            const shift = key[keyIndex % key.length].charCodeAt(0) - 1072;
+            result += caesarCipher(text[i], encode ? shift : -shift);
+            keyIndex++;
+        } else {
+            result += text[i];
+        }
     }
     
-    strength.innerHTML = result;
+    return result;
 }
 
-// Генерация пароля
-function generatePassword() {
-    const numbers = '0123456789';
-    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const symbols = '!@#$%^&*';
-    
-    const includeNumbers = document.getElementById('include-numbers').checked;
-    const includeSymbols = document.getElementById('include-symbols').checked;
-    
-    let chars = lowercase + uppercase;
-    if (includeNumbers) chars += numbers;
-    if (includeSymbols) chars += symbols;
-    
-    let password = '';
-    for (let i = 0; i < 12; i++) {
-        password += chars[Math.floor(Math.random() * chars.length)];
-    }
-    
-    document.getElementById('generated-password').innerHTML = 
-        `<div class="generated-password-display">${password}</div>
-         <button onclick="copyToClipboard('${password}')">Копировать</button>`;
+// Двоичный код
+function textToBinary(text) {
+    return text.split('').map(char => {
+        return char.charCodeAt(0).toString(2).padStart(8, '0');
+    }).join(' ');
 }
 
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('Пароль скопирован в буфер обмена!');
-    });
+function binaryToText(binary) {
+    return binary.split(' ').map(bin => {
+        return String.fromCharCode(parseInt(bin, 2));
+    }).join('');
 }
 
 // Тесты
@@ -265,26 +175,57 @@ const quizQuestions = [
             'Использовать двухфакторную аутентификацию'
         ],
         correct: 3
+    },
+    {
+        question: 'Какой метод шифрования использовал Юлий Цезарь?',
+        options: [
+            'Шифр Виженера',
+            'Шифр Цезаря',
+            'Азбука Морзе',
+            'Двоичный код'
+        ],
+        correct: 1
+    },
+    {
+        question: 'Зачем нужно шифрование данных?',
+        options: [
+            'Для украшения текста',
+            'Для экономии места',
+            'Для защиты конфиденциальной информации',
+            'Для увеличения скорости передачи'
+        ],
+        correct: 2
+    },
+    {
+        question: 'Какой из этих методов защиты самый важный?',
+        options: [
+            'Регулярное обновление программ',
+            'Использование сложных паролей',
+            'Двухфакторная аутентификация',
+            'Все вышеперечисленное'
+        ],
+        correct: 3
     }
 ];
 
 let currentQuestion = 0;
 
-// Ждем загрузки DOM перед инициализацией
 document.addEventListener('DOMContentLoaded', function() {
-    const questionElement = document.getElementById('question');
-    if (questionElement) {
-        showQuestion();
-    }
-
-    // Обработчик изменения типа шифра
+    showQuestion();
+    
     const cipherType = document.getElementById('cipher-type');
     if (cipherType) {
         cipherType.addEventListener('change', function() {
             const shiftControl = document.getElementById('caesar-shift');
+            const vigenereKey = document.getElementById('vigenere-key-container');
+            
             if (shiftControl) {
                 shiftControl.style.display = this.value === 'caesar' ? 'block' : 'none';
             }
+            if (vigenereKey) {
+                vigenereKey.style.display = this.value === 'vigenere' ? 'block' : 'none';
+            }
+            
             const description = document.getElementById('cipher-description');
             if (description) {
                 description.textContent = cipherDescriptions[this.value];
@@ -295,8 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function showQuestion() {
     const questionData = quizQuestions[currentQuestion];
-    const questionElement = document.getElementById('question');
-    const optionsElement = document.getElementById('options');
+    const questionElement = document.getElementById('quiz-question');
+    const optionsElement = document.getElementById('quiz-options');
     
     if (questionElement && optionsElement) {
         questionElement.innerHTML = `<h3>${questionData.question}</h3>`;
@@ -319,21 +260,21 @@ function checkAnswer() {
 
     const answer = parseInt(selected.value);
     const correct = quizQuestions[currentQuestion].correct;
-    const result = document.getElementById('result');
+    const resultElement = document.getElementById('quiz-result');
     
-    if (result) {
-        result.style.display = 'block';
+    if (resultElement) {
+        resultElement.style.display = 'block';
         if (answer === correct) {
-            result.innerHTML = 'Правильно! 🎉';
-            result.className = 'correct';
+            resultElement.innerHTML = 'Правильно! 🎉';
+            resultElement.className = 'correct';
         } else {
-            result.innerHTML = `Неправильно. Правильный ответ: ${quizQuestions[currentQuestion].options[correct]}`;
-            result.className = 'incorrect';
+            resultElement.innerHTML = `Неправильно. Правильный ответ: ${quizQuestions[currentQuestion].options[correct]}`;
+            resultElement.className = 'incorrect';
         }
         
         currentQuestion = (currentQuestion + 1) % quizQuestions.length;
         setTimeout(() => {
-            result.style.display = 'none';
+            resultElement.style.display = 'none';
             showQuestion();
         }, 2000);
     }

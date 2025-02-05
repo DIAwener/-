@@ -26,28 +26,24 @@
         </section>
 
         <section id="education" class="education">
-            <h2>Образовательные материалы</h2>
-            <div class="articles-grid">
-                <article class="card">
-                    <h3>Основы кибербезопасности</h3>
-                    <p>Узнайте базовые принципы защиты в интернете</p>
-                    <button onclick="showContent('cyber-basics')">Читать</button>
-                </article>
-                <article class="card">
-                    <h3>Создание надежного пароля</h3>
-                    <p>Как создать и хранить безопасные пароли</p>
-                    <button onclick="showContent('password-security')">Читать</button>
-                </article>
-                <article class="card">
-                    <h3>Защита от фишинга</h3>
-                    <p>Как распознать и избежать мошенничества</p>
-                    <button onclick="showContent('phishing')">Читать</button>
-                </article>
-                <article class="card">
-                    <h3>Безопасность в соцсетях</h3>
-                    <p>Правила безопасного общения онлайн</p>
-                    <button onclick="showContent('social-media')">Читать</button>
-                </article>
+            <h2>Основы безопасности</h2>
+            <div class="education-grid">
+                <div class="education-item">
+                    <h3>Пароли</h3>
+                    <p>Создавайте надёжные пароли и храните их безопасно</p>
+                </div>
+                <div class="education-item">
+                    <h3>Личные данные</h3>
+                    <p>Защитите свою персональную информацию от утечек</p>
+                </div>
+                <div class="education-item">
+                    <h3>Социальные сети</h3>
+                    <p>Настройте приватность в социальных сетях правильно</p>
+                </div>
+                <div class="education-item">
+                    <h3>Мошенничество</h3>
+                    <p>Распознавайте популярные схемы обмана в интернете</p>
+                </div>
             </div>
         </section>
 
@@ -83,7 +79,38 @@
         </section>
 
         <section id="ciphers" class="ciphers">
+            <h2>Безопасность паролей</h2>
+            <div class="password-info">
+                <h3>Почему важно использовать разные пароли?</h3>
+                <p>Использование одинаковых паролей для разных учетных записей - это как использование одного ключа для всех замков. Если злоумышленник получит доступ к одной учетной записи, он сможет получить доступ ко всем остальным.</p>
+                
+                <h3>Как создать надёжный пароль?</h3>
+                <p>Вот несколько способов создания надёжных паролей:</p>
+                <ol>
+                    <li><strong>Метод любимой песни:</strong><br>
+                        Возьмите строчку из любимой песни и переведите её на английский.<br>
+                        Например: "Я свободен, словно птица в небесах" → "IAmFreeAsABirdInTheSky"<br>
+                        Добавьте цифры и символы: "IAmFree!AsABird2023InTheSky"</li>
+                    <li><strong>Метод предложения:</strong><br>
+                        Придумайте предложение и возьмите первые буквы слов.<br>
+                        "Мой кот Барсик любит есть рыбу каждый день!" → "MkBlerk!2023"</li>
+                    <li><strong>Метод замены букв:</strong><br>
+                        Замените буквы похожими цифрами и символами.<br>
+                        "Секретный пароль" → "$ekret2023Par0l!"</li>
+                </ol>
+            </div>
+
             <h2>Шифрование текста</h2>
+            <div class="cipher-info">
+                <h3>Зачем нужны шифры?</h3>
+                <p>Шифрование - это способ защиты информации путём её преобразования в код, который могут прочитать только те, у кого есть ключ для расшифровки. Шифры используются для:</p>
+                <ul>
+                    <li>Защиты конфиденциальной информации</li>
+                    <li>Безопасной передачи данных через интернет</li>
+                    <li>Хранения паролей в базах данных</li>
+                    <li>Защиты личной переписки</li>
+                </ul>
+            </div>
             <div class="cipher-container">
                 <div class="cipher-input">
                     <textarea id="input-text" placeholder="Введите текст для шифрования"></textarea>
@@ -93,10 +120,16 @@
                         <option value="caesar">Шифр Цезаря (сдвиг букв)</option>
                         <option value="atbash">Шифр Атбаш (обратный алфавит)</option>
                         <option value="morse">Азбука Морзе</option>
+                        <option value="vigenere">Шифр Виженера</option>
+                        <option value="binary">Двоичный код</option>
                     </select>
                     <div id="caesar-shift" class="shift-control">
                         <label for="shift">Сдвиг (для шифра Цезаря):</label>
                         <input type="number" id="shift" min="1" max="32" value="3">
+                    </div>
+                    <div id="vigenere-key-container" class="key-control" style="display: none;">
+                        <label for="vigenere-key">Ключевое слово:</label>
+                        <input type="text" id="vigenere-key" value="ключ">
                     </div>
                     <button onclick="encodeCipher()">Зашифровать</button>
                     <button onclick="decodeCipher()">Расшифровать</button>
@@ -125,13 +158,6 @@
     <footer>
         <p>Участник конкурса «КРИТ-2025» Ишкузин Даниил приветствует жюри конкурса!»</p>
     </footer>
-
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="modal-content"></div>
-        </div>
-    </div>
 
     <script src="main.js"></script>
 </body>
