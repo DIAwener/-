@@ -5,6 +5,9 @@
     --accent-color: #e74c3c;
     --background-color: #ecf0f1;
     --text-color: #2c3e50;
+    --success-color: #2ecc71;
+    --warning-color: #f1c40f;
+    --danger-color: #e74c3c;
 }
 
 /* Базовые стили */
@@ -121,7 +124,7 @@ h2::after {
 }
 
 /* Сетки */
-.education-grid, .tools-grid {
+.education-grid, .tools-grid, .tips-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
@@ -129,7 +132,7 @@ h2::after {
 }
 
 /* Карточки */
-.education-item, .tool-item {
+.education-item, .tool-item, .tip-card {
     background: white;
     padding: 1.5rem;
     border-radius: 15px;
@@ -137,9 +140,52 @@ h2::after {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.education-item:hover, .tool-item:hover {
+.education-item:hover, .tool-item:hover, .tip-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Советы по безопасности */
+.security-tips {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 20px;
+    margin: 4rem auto;
+}
+
+.tip-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.tip-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tip-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.tip-card li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.tip-card li::before {
+    content: '•';
+    color: var(--secondary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
 }
 
 /* Информация о паролях */
