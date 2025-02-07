@@ -12,6 +12,116 @@ const cipherDescriptions = {
     binary: 'Двоичный код - это представление текста в виде последовательности нулей и единиц. Это базовый метод кодирования информации в компьютерных системах.'
 };
 
+// Функции для работы с паролями
+function checkPassword() {
+    const password = document.getElementById('password-input').value;
+    const strengthDiv = document.getElementById('password-strength');
+    
+    // Критерии оценки
+    const hasLower = /[a-z]/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const isLongEnough = password.length >= 8;
+    
+    let strength = 0;
+    let message = '';
+    
+    // Подсчёт силы пароля
+    if (hasLower) strength++;
+    if (hasUpper) strength++;
+    if (hasNumber) strength++;
+    if (hasSpecial) strength++;
+    if (isLongEnough) strength++;
+    
+    // Определение сообщения
+    switch(strength) {
+        case 0:
+        case 1:
+            message = '<span style="color: var(--danger-color)">Очень слабый пароль</span>';
+            break;
+        case 2:
+            message = '<span style="color: var(--warning-color)">Слабый пароль</span>';
+            break;
+        case 3:
+            message = '<span style="color: var(--warning-color)">Средний пароль</span>';
+            break;
+        case 4:
+            message = '<span style="color: var(--success-color)">Хороший пароль</span>';
+            break;
+        case 5:
+            message = '<span style="color: var(--success-color)">Отличный пароль!</span>';
+            break;
+    }
+    
+    // Добавление рекомендаций
+    let recommendations = [];
+    if (!hasLower) recommendations.push('строчные буквы');
+    if (!hasUpper) recommendations.push('заглавные буквы');
+    if (!hasNumber) recommendations.push('цифры');
+    if (!hasSpecial) recommendations.push('специальные символы');
+    if (!isLongEnough) recommendations.push('минимум 8 символов');
+    
+    if (recommendations.length > 0) {
+        message += '<br>Добавьте: ' + recommendations.join(', ');
+    }
+    
+    strengthDiv.innerHTML = message;
+}
+
+function generatePassword() {
+    const length = 16;
+    const includeNumbers = document.getElementById('include-numbers').checked;
+    const includeSymbols = document.getElementById('include-symbols').checked;
+    
+    let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const symbols = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    
+    if (includeNumbers) chars += numbers;
+    if (includeSymbols) chars += symbols;
+    
+    let password = '';
+    for (let i = 0; i < length; i++) {
+        password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    
+    // Убеждаемся, что пароль содержит как минимум одну букву каждого регистра
+    if (!/[a-z]/.test(password)) {
+        const pos = Math.floor(Math.random() * length);
+        password = password.substring(0, pos) + 
+                  'abcdefghijklmnopqrstuvwxyz'.charAt(Math.floor(Math.random() * 26)) +
+                  password.substring(pos + 1);
+    }
+    if (!/[A-Z]/.test(password)) {
+        const pos = Math.floor(Math.random() * length);
+        password = password.substring(0, pos) + 
+                  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.charAt(Math.floor(Math.random() * 26)) +
+                  password.substring(pos + 1);
+    }
+    
+    // Если выбраны цифры, убеждаемся что хотя бы одна присутствует
+    if (includeNumbers && !/\d/.test(password)) {
+        const pos = Math.floor(Math.random() * length);
+        password = password.substring(0, pos) + 
+                  numbers.charAt(Math.floor(Math.random() * numbers.length)) +
+                  password.substring(pos + 1);
+    }
+    
+    // Если выбраны символы, убеждаемся что хотя бы один присутствует
+    if (includeSymbols && !/[!@#$%^&*()_+-=[\]{}|;:,.<>?]/.test(password)) {
+        const pos = Math.floor(Math.random() * length);
+        password = password.substring(0, pos) + 
+                  symbols.charAt(Math.floor(Math.random() * symbols.length)) +
+                  password.substring(pos + 1);
+    }
+    
+    document.getElementById('generated-password').innerHTML = 
+        `<div style="margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; font-family: monospace;">
+            ${password}
+        </div>`;
+}
+
 // Азбука Морзе
 const morseCode = {
     'а': '.-', 'б': '-...', 'в': '.--', 'г': '--.', 'д': '-..', 'е': '.', 'ё': '.', 
